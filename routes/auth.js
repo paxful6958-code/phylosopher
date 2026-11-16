@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/User');
 
 // --- Chat Datastore (NeDB) Setup with Directory Auto-Creation ---
-const Datastore = require('nedb');
+const Datastore = require("@seald-io/nedb");
 const path = require('path');
 const fs = require('fs');
 
