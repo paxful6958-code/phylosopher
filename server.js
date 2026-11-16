@@ -1,7 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
 require("dotenv").config();
+
+// ---- Ensure required local directories exist BEFORE loading routes/DB ----
+const requiredDirs = [
+    path.join(__dirname, "database"),
+    path.join(__dirname, "public", "uploads")
+];
+
+requiredDirs.forEach((dir) => {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+});
 
 const app = express();
 
