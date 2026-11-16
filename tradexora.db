@@ -1,0 +1,13 @@
+{"username":"josphat langat","email":"ecocashloansapp@gmail.com","password":"123456","role":"user","kycStatus":"VERIFIED","wallet":{"realBalance":0.003539999999986776,"demoBalance":10000},"createdAt":{"$$date":1794404279953},"_id":"5RIW67ocNjSQWWXQ"}
+{"username":"Agnes","email":"agnesjosphat907@gmail.com","password":"123456","role":"user","wallet":{"realBalance":150,"demoBalance":10000},"createdAt":{"$$date":1794127781096},"_id":"8YGB42BQ2Ru1iYjC"}
+{"username":"Fami","email":"faminoma123@gmail.com","password":"123456","role":"user","wallet":{"realBalance":100,"demoBalance":10000},"createdAt":{"$$date":1794164435884},"_id":"Fp3ar45wHSEsBsgu"}
+{"username":"Koech Kibet","email":"christophererick807@gmail.com","password":"123456","role":"user","wallet":{"realBalance":418.39466000000004,"demoBalance":10094.03036},"createdAt":{"$$date":1794126087211},"_id":"S105luQM2ATRWePN"}
+{"username":"SuperAdmin","email":"admin@tradexora.com","password":"securepassword123","role":"admin","wallet":{"realBalance":1152.0313000000006,"demoBalance":8903.710439999999},"createdAt":{"$$date":1794122444864},"_id":"p8QxhDjqMoCHOfNw"}
+{"username":"Bitvalve Exchange","email":"bitvalvewestern@gmail.com","password":"123456","role":"user","wallet":{"realBalance":0,"demoBalance":10000},"createdAt":{"$$date":1794136175104},"_id":"sUYyoe2DSyx6xDbO"}
+{"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
+{"$$indexCreated":{"fieldName":"email","unique":true}}
+{"username":"SuperAdmin","email":"admin@tradexora.com","password":"securepassword123","role":"admin","wallet":{"realBalance":2.031300000000556,"demoBalance":8903.710439999999},"createdAt":{"$$date":1794122444864},"_id":"p8QxhDjqMoCHOfNw"}
+{"username":"SuperAdmin","email":"admin@tradexora.com","password":"securepassword123","role":"admin","wallet":{"realBalance":27.42230000000057,"demoBalance":8903.710439999999},"createdAt":{"$$date":1794122444864},"_id":"p8QxhDjqMoCHOfNw"}
+{"username":"SuperAdmin","email":"admin@tradexora.com","password":"securepassword123","role":"admin","wallet":{"realBalance":52.81330000000058,"demoBalance":8903.710439999999},"createdAt":{"$$date":1794122444864},"_id":"p8QxhDjqMoCHOfNw"}
+{"username":"SuperAdmin","email":"admin@tradexora.com","password":"securepassword123","role":"admin","wallet":{"realBalance":80.95708000000059,"demoBalance":8903.710439999999},"createdAt":{"$$date":1794122444864},"_id":"p8QxhDjqMoCHOfNw"}
+{"username":"SuperAdmin","email":"admin@tradexora.com","password":"securepassword123","role":"admin","wallet":{"realBalance":109.1008600000006,"demoBalance":8903.710439999999},"createdAt":{"$$date":1794122444864},"_id":"p8QxhDjqMoCHOfNw"}
