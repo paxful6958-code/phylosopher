@@ -2,21 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-
-// --- Chat Datastore (NeDB) Setup with Directory Auto-Creation ---
-const Datastore = require("@seald-io/nedb");
-const path = require('path');
-const fs = require('fs');
-
-const dbDir = path.join(__dirname, '../database');
-if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true });
-}
-
-const chatDb = new Datastore({
-    filename: path.join(dbDir, 'chats.db'),
-    autoload: true
-});
+const { chatDb } = require('../models/db');
 
 // User Registration Route
 router.post('/signup', (req, res) => {
